@@ -23,6 +23,7 @@ model bahan_baku {
   satuan          String            @db.VarChar(20)
   komposisi_menu  komposisi_menu[]
   penggunaan_stok penggunaan_stok[]
+  peringatan_stok peringatan_stok[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -96,18 +97,20 @@ model pengguna {
   laporan_penjualan laporan_penjualan[]
   pembayaran        pembayaran[]
   penggunaan_stok   penggunaan_stok[]
+  peringatan_stok   peringatan_stok[]
   pesanan           pesanan[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
 model penggunaan_stok {
-  id_penggunaan  String     @id @db.VarChar(10)
-  tanggal        DateTime   @db.Date
-  jumlah_dipakai Decimal    @db.Decimal(10, 2)
-  id_bahan       String     @db.VarChar(10)
-  id_pengguna    String     @db.VarChar(10)
-  bahan_baku     bahan_baku @relation(fields: [id_bahan], references: [id_bahan], onDelete: NoAction, onUpdate: NoAction)
-  pengguna       pengguna   @relation(fields: [id_pengguna], references: [id_pengguna], onDelete: NoAction, onUpdate: NoAction)
+  id_penggunaan   String            @id @db.VarChar(10)
+  tanggal         DateTime          @db.Date
+  jumlah_dipakai  Decimal           @db.Decimal(10, 2)
+  id_bahan        String            @db.VarChar(10)
+  id_pengguna     String            @db.VarChar(10)
+  bahan_baku      bahan_baku        @relation(fields: [id_bahan], references: [id_bahan], onDelete: NoAction, onUpdate: NoAction)
+  pengguna        pengguna          @relation(fields: [id_pengguna], references: [id_pengguna], onDelete: NoAction, onUpdate: NoAction)
+  peringatan_stok peringatan_stok[]
 }
 
 /// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
@@ -132,4 +135,19 @@ model transaksi {
   total_transaksi   Decimal    @db.Decimal(10, 2)
   id_pembayaran     String     @db.VarChar(10)
   pembayaran        pembayaran @relation(fields: [id_pembayaran], references: [id_pembayaran], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model peringatan_stok {
+  id_peringatan      String           @id @db.VarChar(10)
+  tanggal_peringatan DateTime         @default(now()) @db.Timestamp(6)
+  id_bahan           String           @db.VarChar(10)
+  id_penggunaan      String?          @db.VarChar(10)
+  id_pengguna        String           @db.VarChar(10)
+  tipe_peringatan    String           @db.VarChar(30)
+  pesan              String
+  status_tindakan    String           @default("MENUNGGU") @db.VarChar(20)
+  bahan_baku         bahan_baku       @relation(fields: [id_bahan], references: [id_bahan], onDelete: NoAction, onUpdate: NoAction)
+  pengguna           pengguna         @relation(fields: [id_pengguna], references: [id_pengguna], onDelete: NoAction, onUpdate: NoAction)
+  penggunaan_stok    penggunaan_stok? @relation(fields: [id_penggunaan], references: [id_penggunaan], onUpdate: NoAction)
 }

@@ -1,5 +1,5 @@
 const inputClassName =
-  "h-[56px] w-full rounded-full border border-white/30 bg-white/10 px-5 pl-12 text-sm text-white placeholder:text-white/65 outline-none transition focus:border-white/60 focus:bg-white/15";
+  "h-[58px] w-full rounded-full border border-white/30 bg-white/10 px-4 pl-12 text-sm text-white placeholder:text-white/65 outline-none transition duration-200 ease-out focus:border-white/60 focus:bg-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.12)]";
 
 function UserIcon() {
   return (
@@ -39,62 +39,68 @@ function LockIcon() {
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen w-full items-center justify-center bg-[#5869b5] px-4 py-8 text-white">
-      <div className="relative w-full max-w-[852px] rounded-[40px] border border-white/60 bg-gradient-to-b from-white/10 to-white/40 px-6 py-10 shadow-[0_0_30px_rgba(11,20,67,0.14)] backdrop-blur-xl sm:px-8 lg:px-10">
-        <div className="absolute left-6 top-5 sm:left-8 lg:left-10">
-          <div className="flex flex-col leading-[0.75] font-black tracking-[-0.14em] text-white/95">
-            <span className="text-[2.1rem] sm:text-[2.8rem]">ko</span>
-            <span className="text-[2.1rem] sm:text-[2.8rem]">pi</span>
-            <span className="text-[2.1rem] sm:text-[2.8rem]">oz</span>
-          </div>
-        </div>
+    <main className="flex min-h-screen w-full items-center justify-center bg-[#5869b5] px-4 py-8 text-white sm:px-6 lg:px-10">
+      <div className="relative w-full max-w-[860px] overflow-hidden rounded-[36px] border border-white/60 bg-[linear-gradient(180deg,#93a5ea_0%,#6677d4_30%,#4a4eb1_100%)] p-6 shadow-[0_24px_70px_rgba(15,17,78,0.28)] sm:p-8 lg:p-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(130,118,255,0.18),transparent_28%)]" />
 
-        <div className="mx-auto mt-10 w-full max-w-[620px]">
-          <h1 className="mb-8 text-center text-[2.5rem] font-black leading-none tracking-tight text-white sm:text-[3.2rem] lg:text-[4rem]">
-            Login Sebagai
-          </h1>
-
-          <div className="space-y-5">
-            <div className="relative">
-              <span className="pointer-events-none absolute inset-y-0 left-5 flex items-center">
-                <UserIcon />
-              </span>
-              <input
-                aria-label="Username"
-                type="text"
-                placeholder="Username"
-                className={inputClassName}
-              />
-            </div>
-
-            <div className="relative">
-              <span className="pointer-events-none absolute inset-y-0 left-5 flex items-center">
-                <LockIcon />
-              </span>
-              <input
-                aria-label="Password"
-                type="password"
-                placeholder="Password"
-                className={inputClassName}
-              />
+        <div className="relative z-10">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex flex-col leading-[0.7] font-black tracking-[-0.12em] text-white/95">
+              <span className="text-[2.6rem] sm:text-[3rem]">ko</span>
+              <span className="text-[2.6rem] sm:text-[3rem]">pi</span>
+              <span className="text-[2.6rem] sm:text-[3rem]">oz</span>
             </div>
           </div>
 
-          <div className="mt-4 flex justify-end">
+          <div className="mx-auto mt-8 w-full max-w-[560px]">
+            <h1 className="text-center text-[2.4rem] font-extrabold leading-none tracking-[-0.05em] text-white sm:text-[3rem] lg:text-[3.6rem]">
+              Login Sebagai
+            </h1>
+
+            <div className="mt-8 space-y-4">
+              <label className="relative block">
+                <span className="sr-only">Username</span>
+                <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center">
+                  <UserIcon />
+                </span>
+                <input
+                  aria-label="Username"
+                  type="text"
+                  placeholder="Username"
+                  className={inputClassName}
+                />
+              </label>
+
+              <label className="relative block">
+                <span className="sr-only">Password</span>
+                <span className="pointer-events-none absolute inset-y-0 left-4 flex items-center">
+                  <LockIcon />
+                </span>
+                <input
+                  aria-label="Password"
+                  type="password"
+                  placeholder="Password"
+                  className={inputClassName}
+                />
+              </label>
+            </div>
+
+            <div className="mt-3 flex justify-end">
+              <button
+                type="button"
+                className="text-[11px] font-medium text-white/75 underline-offset-4 transition hover:text-white hover:underline"
+              >
+                Recovery Password
+              </button>
+            </div>
+
             <button
               type="button"
-              className="text-xs font-medium text-white/75 underline-offset-4 transition hover:text-white hover:underline"
+              className="mt-7 flex h-[54px] w-full items-center justify-center rounded-full border border-white/45 bg-white/10 text-base font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] transition hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
             >
-              Recovery Password
+              Login
             </button>
           </div>
-
-          <button
-            type="button"
-            className="mt-7 flex h-[54px] w-full items-center justify-center rounded-full border border-white/50 bg-white/12 text-base font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] transition hover:bg-white/18 focus:outline-none focus:ring-2 focus:ring-white/60"
-          >
-            Login
-          </button>
         </div>
       </div>
     </main>
