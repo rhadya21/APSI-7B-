@@ -3,6 +3,8 @@
 -- SISTEM INFORMASI PELAYANAN KOPI OZ
 -- ========================================
 
+-- 0. HAPUS TABEL LAMA (agar script bisa dijalankan berulang kali)
+
 DROP TABLE IF EXISTS
     laporan_penjualan, transaksi, pembayaran, detail_pesanan,
     pesanan, penggunaan_stok, komposisi_menu, pengguna,
@@ -224,6 +226,10 @@ INSERT INTO laporan_penjualan
 VALUES
 ('LP001', 'Oktober 2026', 254000, 'USR02');
 
+-- ========================================
+-- CEK JUMLAH DATA TIAP TABEL (hasil: 1 tabel ringkasan)
+-- ========================================
+
 SELECT 'bahan_baku' AS tabel, COUNT(*) AS jumlah_baris FROM bahan_baku
 UNION ALL SELECT 'menu', COUNT(*) FROM menu
 UNION ALL SELECT 'pelanggan', COUNT(*) FROM pelanggan
@@ -235,6 +241,10 @@ UNION ALL SELECT 'detail_pesanan', COUNT(*) FROM detail_pesanan
 UNION ALL SELECT 'pembayaran', COUNT(*) FROM pembayaran
 UNION ALL SELECT 'transaksi', COUNT(*) FROM transaksi
 UNION ALL SELECT 'laporan_penjualan', COUNT(*) FROM laporan_penjualan;
+
+-- ========================================
+-- TAMPILKAN ISI SEMUA TABEL
+-- ========================================
 
 SELECT * FROM bahan_baku;
 SELECT * FROM menu;
