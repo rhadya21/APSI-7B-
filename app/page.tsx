@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
+import SplashScreen from "@/components/splash-screen";
+
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
@@ -13,9 +15,9 @@ export default async function HomePage() {
       if (session.role === "kasir") redirect("/kasir");
       if (session.role === "pemilik") redirect("/pemilik");
     } catch {
-      // Ignore malformed cookie and continue to login.
+      // Ignore malformed cookie and continue to splash.
     }
   }
 
-  redirect("/login");
+  return <SplashScreen />;
 }

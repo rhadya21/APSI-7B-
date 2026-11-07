@@ -1,9 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-
-import { loginAction } from "@/app/login/actions";
 
 type LoginRole = "kasir" | "pemilik";
 
@@ -25,9 +22,8 @@ function getErrorMessage(role: LoginRole, error: string | null) {
   }
 }
 
-export function LoginForm({ role }: { role: LoginRole }) {
-  const searchParams = useSearchParams();
-  const error = getErrorMessage(role, searchParams.get("error"));
+export function LoginForm({ role, error }: { role: LoginRole; error?: string | null }) {
+  const formError = getErrorMessage(role, error ?? null);
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-[#5869b5] px-4 py-8 sm:px-6 lg:px-10">
@@ -54,43 +50,56 @@ export function LoginForm({ role }: { role: LoginRole }) {
               Login {roleLabels[role]}
             </h1>
 
-            {error ? (
+            {formError ? (
               <div className="mt-4 rounded-2xl border border-red-200/60 bg-red-100/10 px-4 py-3 text-sm font-medium text-red-50 backdrop-blur-sm">
-                {error}
+                {formError}
               </div>
             ) : null}
 
-            <form action={loginAction} className="mt-8 space-y-5">
+            <form
+              className="mt-8"
+              onSubmit={(event) => event.preventDefault()}
+              noValidate
+            >
               <input type="hidden" name="role" value={role} />
 
-              <div className="space-y-3 rounded-[28px] border border-white/25 bg-[rgba(255,255,255,0.06)] p-4 backdrop-blur-sm">
-                <label className="block text-sm font-medium text-white/80">
-                  Username
-                  <input
-                    name="username"
-                    type="text"
-                    autoComplete="username"
-                    required
-                    placeholder="Masukkan username"
-                    className="mt-2 h-[52px] w-full rounded-full border border-white/30 bg-white/10 px-4 text-base text-white placeholder:text-white/55 outline-none transition focus:border-white/60 focus:bg-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.12)]"
-                  />
-                </label>
+              <div className="space-y-6 rounded-[28px] border border-white/25 bg-[rgba(255,255,255,0.06)] p-4 backdrop-blur-sm sm:p-5">
+                <div className="space-y-5">
+                  <label className="block text-[11px] font-medium uppercase tracking-[0.12em] text-white/75">
+                    <span className="mb-2 block">Username</span>
+                    <input
+                      name="username"
+                      type="text"
+                      autoComplete="username"
+                      placeholder="Masukkan username"
+                      className="h-[52px] w-full rounded-full border border-white/30 bg-white/10 px-5 text-sm text-white placeholder:text-[11px] placeholder:font-medium placeholder:text-white/60 outline-none transition focus:border-white/60 focus:bg-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.12)]"
+                    />
+                  </label>
 
-                <label className="block text-sm font-medium text-white/80">
-                  Password
-                  <input
-                    name="password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    placeholder="Masukkan password"
-                    className="mt-2 h-[52px] w-full rounded-full border border-white/30 bg-white/10 px-4 text-base text-white placeholder:text-white/55 outline-none transition focus:border-white/60 focus:bg-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.12)]"
-                  />
-                </label>
+                  <label className="block text-[11px] font-medium uppercase tracking-[0.12em] text-white/75">
+                    <span className="mb-2 block">Password</span>
+                    <input
+                      name="password"
+                      type="password"
+                      autoComplete="current-password"
+                      placeholder="Masukkan password"
+                      className="h-[52px] w-full rounded-full border border-white/30 bg-white/10 px-5 text-sm text-white placeholder:text-[11px] placeholder:font-medium placeholder:text-white/60 outline-none transition focus:border-white/60 focus:bg-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.12)]"
+                    />
+                  </label>
+                </div>
+
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    className="text-[11px] font-medium text-white/80 underline-offset-4 transition hover:text-white hover:underline focus:outline-none focus:ring-2 focus:ring-white/40"
+                  >
+                    Recovery Password
+                  </button>
+                </div>
 
                 <button
-                  type="submit"
-                  className="mt-2 flex h-[52px] w-full items-center justify-center rounded-full border border-white/45 bg-white/10 text-base font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] transition hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
+                  type="button"
+                  className="flex h-[52px] w-full items-center justify-center rounded-full border border-white/45 bg-white/10 text-base font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] transition hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-white/60"
                 >
                   Login
                 </button>

@@ -5,7 +5,11 @@ import { LoginForm } from "@/components/login-form";
 
 export const dynamic = "force-dynamic";
 
-export default async function KasirLoginPage() {
+export default async function KasirLoginPage({
+  searchParams,
+}: {
+  searchParams?: Promise<{ error?: string | string[] }> | { error?: string | string[] };
+}) {
   const cookieStore = await cookies();
   const sessionCookie = cookieStore.get("kopioz_session")?.value;
 
@@ -19,5 +23,10 @@ export default async function KasirLoginPage() {
     }
   }
 
-  return <LoginForm role="kasir" />;
+  const resolvedSearchParams = await Promise.resolve(searchParams ?? {});
+  const error = Array.isArray(resolvedSearchParams.error)
+    ? resolvedSearchParams.error[0]
+    : resolvedSearchParams.error ?? null;
+
+  return <LoginForm role="kasir" error={error} />;
 }
