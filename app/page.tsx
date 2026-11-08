@@ -12,8 +12,9 @@ export default async function HomePage() {
   if (sessionCookie) {
     try {
       const session = JSON.parse(sessionCookie) as { role?: string };
-      if (session.role === "kasir") redirect("/kasir");
-      if (session.role === "pemilik") redirect("/pemilik");
+      const sessionRole = String(session.role ?? "").trim().toLowerCase();
+      if (sessionRole === "kasir") redirect("/kasir");
+      if (sessionRole === "pemilik") redirect("/pemilik");
     } catch {
       // Ignore malformed cookie and continue to splash.
     }

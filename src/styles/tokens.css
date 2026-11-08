@@ -1,0 +1,15 @@
+:root {
+  --oz-blue: #5869b5;
+  --oz-blue-deep: #4d5fae;
+  --oz-blue-light: #6579d8;
+  --oz-panel: rgba(152, 163, 223, 0.15);
+  --oz-white: #ffffff;
+  --oz-ink: #1e2b4d;
+  --oz-muted: rgba(255, 255, 255, 0.72);
+  --oz-border: rgba(255, 255, 255, 0.6);
+  --oz-radius-card: 28px;
+  --oz-radius-pill: 40px;
+  --oz-sidebar-width: 240px;
+  --oz-shadow-panel: 0 24px 70px rgba(15, 17, 78, 0.28);
+  --oz-shadow-card: 0 18px 30px rgba(31, 42, 103, 0.18);
+}

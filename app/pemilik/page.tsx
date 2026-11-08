@@ -1,7 +1,9 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+import { Prisma } from "@/app/generated/prisma/client";
 import { DashboardShell } from "@/components/dashboard-shell";
+import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +21,43 @@ export default async function PemilikPage() {
     redirect("/login");
   }
 
-  if (session.role !== "pemilik") redirect(session.role === "kasir" ? "/kasir" : "/login");
+  const sessionRole = String(session.role ?? "").trim().toLowerCase();
 
-  return <DashboardShell role="Pemilik" userName={session.name ?? "Pemilik"} />;
+  if (sessionRole !== "pemilik") {
+    redirect("/login");
+  }
+
+  const roleLabel = "Pemilik";
+
+  let orders: Prisma.pesananGetPayload<{
+    include: {
+      pelanggan: true;
+      detail_pesanan: {
+        include: {
+          menu: true;
+        };
+      };
+    };
+  }>[] = [];
+
+  try {
+    orders = await prisma.pesanan.findMany({
+      where: {
+        status_pesanan: "Selesai",
+      },
+      orderBy: [{ tanggal: "desc" }, { nomor_antrian: "desc" }],
+      include: {
+        pelanggan: true,
+        detail_pesanan: {
+          include: {
+            menu: true,
+          },
+        },
+      },
+    });
+  } catch {
+    orders = [];
+  }
+
+  return <DashboardShell role={roleLabel} userName={session.name ?? roleLabel} orders={orders} />;
 }

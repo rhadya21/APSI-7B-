@@ -1,6 +1,5 @@
-"use client";
-
 import Link from "next/link";
+import { loginAction } from "@/app/login/actions";
 
 type LoginRole = "kasir" | "pemilik";
 
@@ -27,26 +26,26 @@ export function LoginForm({ role, error }: { role: LoginRole; error?: string | n
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center bg-[#5869b5] px-4 py-8 sm:px-6 lg:px-10">
-      <div className="relative w-full max-w-[860px] overflow-hidden rounded-[40px] border border-white/60 bg-[linear-gradient(180deg,rgba(147,165,234,0.25),rgba(103,119,212,0.28),rgba(77,90,177,0.4))] p-6 shadow-[0_24px_70px_rgba(15,17,78,0.28)] sm:p-8 lg:p-10">
+      <div className="relative w-full max-w-[860px] overflow-hidden rounded-[36px] border border-white/60 bg-[linear-gradient(180deg,rgba(147,165,234,0.25),rgba(103,119,212,0.28),rgba(77,90,177,0.4))] p-6 shadow-[0_24px_70px_rgba(15,17,78,0.28)] sm:p-8 lg:p-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(130,118,255,0.18),transparent_30%)]" />
 
         <div className="relative z-10">
-          <div className="flex flex-col leading-[0.7] font-black tracking-[-0.12em] text-white/95">
+          <div className="flex flex-col leading-[0.72] font-black tracking-[-0.12em] text-white/95">
             <span className="text-[2.3rem] sm:text-[3.1rem]">ko</span>
             <span className="text-[2.3rem] sm:text-[3.1rem]">pi</span>
             <span className="text-[2.3rem] sm:text-[3.1rem]">oz</span>
           </div>
 
-          <div className="mx-auto mt-5 w-full max-w-[520px]">
+          <div className="mx-auto mt-7 w-full max-w-[470px] sm:max-w-[500px]">
             <Link
               href="/login"
-              className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-white/75 transition hover:text-white"
+              className="mb-5 inline-flex items-center gap-2 text-sm font-medium text-white/75 transition hover:text-white"
             >
               <span aria-hidden="true">←</span>
               Kembali
             </Link>
 
-            <h1 className="text-center text-[2.2rem] font-extrabold leading-none tracking-[-0.05em] text-white sm:text-[2.8rem] lg:text-[3.3rem]">
+            <h1 className="text-center text-[2.1rem] font-extrabold leading-none tracking-[-0.05em] text-white sm:text-[2.8rem] lg:text-[3.2rem]">
               Login {roleLabels[role]}
             </h1>
 
@@ -56,41 +55,37 @@ export function LoginForm({ role, error }: { role: LoginRole; error?: string | n
               </div>
             ) : null}
 
-            <form
-              className="mt-8"
-              onSubmit={(event) => event.preventDefault()}
-              noValidate
-            >
+            <form action={loginAction} className="mt-7" noValidate>
               <input type="hidden" name="role" value={role} />
 
               <div className="space-y-6 rounded-[28px] border border-white/25 bg-[rgba(255,255,255,0.06)] p-4 backdrop-blur-sm sm:p-5">
                 <div className="space-y-5">
-                  <label className="block text-[11px] font-medium uppercase tracking-[0.12em] text-white/75">
+                  <label className="block text-[10px] font-medium uppercase tracking-[0.14em] text-white/75">
                     <span className="mb-2 block">Username</span>
                     <input
                       name="username"
                       type="text"
                       autoComplete="username"
                       placeholder="Masukkan username"
-                      className="h-[52px] w-full rounded-full border border-white/30 bg-white/10 px-5 text-sm text-white placeholder:text-[11px] placeholder:font-medium placeholder:text-white/60 outline-none transition focus:border-white/60 focus:bg-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.12)]"
+                      className="h-[48px] w-full rounded-[16px] border border-white/30 bg-white/10 px-4 text-sm text-white placeholder:text-[11px] placeholder:font-medium placeholder:text-white/60 outline-none transition focus:border-white/60 focus:bg-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.12)]"
                     />
                   </label>
 
-                  <label className="block text-[11px] font-medium uppercase tracking-[0.12em] text-white/75">
+                  <label className="block pt-2 text-[10px] font-medium uppercase tracking-[0.14em] text-white/75">
                     <span className="mb-2 block">Password</span>
                     <input
                       name="password"
                       type="password"
                       autoComplete="current-password"
                       placeholder="Masukkan password"
-                      className="h-[52px] w-full rounded-full border border-white/30 bg-white/10 px-5 text-sm text-white placeholder:text-[11px] placeholder:font-medium placeholder:text-white/60 outline-none transition focus:border-white/60 focus:bg-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.12)]"
+                      className="h-[48px] w-full rounded-[16px] border border-white/30 bg-white/10 px-4 text-sm text-white placeholder:text-[11px] placeholder:font-medium placeholder:text-white/60 outline-none transition focus:border-white/60 focus:bg-white/15 focus:shadow-[0_0_0_3px_rgba(255,255,255,0.12)]"
                     />
                   </label>
                 </div>
 
                 <div className="flex justify-end">
                   <button
-                    type="button"
+                    type="submit"
                     className="text-[11px] font-medium text-white/80 underline-offset-4 transition hover:text-white hover:underline focus:outline-none focus:ring-2 focus:ring-white/40"
                   >
                     Recovery Password

@@ -11,27 +11,28 @@ export function middleware(request: NextRequest) {
     if (sessionCookie) {
       try {
         const session = JSON.parse(sessionCookie) as { role?: string };
+        const sessionRole = String(session.role ?? "").trim().toLowerCase();
 
         if (isLoginRolePage) {
           const expectedRole = pathname === "/login/kasir" ? "kasir" : "pemilik";
-          if (session.role === expectedRole) {
+          if (sessionRole === expectedRole) {
             return NextResponse.redirect(new URL(`/${expectedRole}`, request.url));
           }
 
-          if (session.role === "kasir") {
+          if (sessionRole === "kasir") {
             return NextResponse.redirect(new URL("/kasir", request.url));
           }
 
-          if (session.role === "pemilik") {
+          if (sessionRole === "pemilik") {
             return NextResponse.redirect(new URL("/pemilik", request.url));
           }
         }
 
-        if (session.role === "kasir") {
+        if (sessionRole === "kasir") {
           return NextResponse.redirect(new URL("/kasir", request.url));
         }
 
-        if (session.role === "pemilik") {
+        if (sessionRole === "pemilik") {
           return NextResponse.redirect(new URL("/pemilik", request.url));
         }
       } catch {
@@ -48,17 +49,14 @@ export function middleware(request: NextRequest) {
 
   try {
     const session = JSON.parse(sessionCookie) as { role?: string };
+    const sessionRole = String(session.role ?? "").trim().toLowerCase();
 
-    if (pathname.startsWith("/kasir") && session.role !== "kasir") {
-      return NextResponse.redirect(
-        new URL(session.role === "pemilik" ? "/pemilik" : "/login", request.url),
-      );
+    if (pathname.startsWith("/kasir") && sessionRole !== "kasir") {
+      return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    if (pathname.startsWith("/pemilik") && session.role !== "pemilik") {
-      return NextResponse.redirect(
-        new URL(session.role === "kasir" ? "/kasir" : "/login", request.url),
-      );
+    if (pathname.startsWith("/pemilik") && sessionRole !== "pemilik") {
+      return NextResponse.redirect(new URL("/login", request.url));
     }
   } catch {
     return NextResponse.redirect(new URL("/login", request.url));

@@ -16,8 +16,9 @@ export default async function PemilikLoginPage({
   if (sessionCookie) {
     try {
       const session = JSON.parse(sessionCookie) as { role?: string };
-      if (session.role === "pemilik") redirect("/pemilik");
-      if (session.role === "kasir") redirect("/kasir");
+      const sessionRole = String(session.role ?? "").trim().toLowerCase();
+      if (sessionRole === "pemilik") redirect("/pemilik");
+      if (sessionRole === "kasir") redirect("/kasir");
     } catch {
       // Ignore malformed cookie; allow the user to log in again.
     }

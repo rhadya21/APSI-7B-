@@ -45,7 +45,7 @@ export async function loginAction(formData: FormData) {
     JSON.stringify({
       userId: user.id_pengguna,
       username: user.username,
-      role: user.role,
+      role: userRole,
       name: user.nama,
     }),
     {
